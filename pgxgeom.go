@@ -221,6 +221,10 @@ func (c codec) DecodeDatabaseSQLValue(m *pgtype.Map, oid uint32, format int16, s
 
 // DecodeValue implements [github.com/jackc/pgx/v5/pgtype.Codec.DecodeValue].
 func (c codec) DecodeValue(m *pgtype.Map, oid uint32, format int16, src []byte) (any, error) {
+    if len(src) == 0 {
+        return nil, nil // NULL value
+    }
+
 	switch format {
 	case pgtype.TextFormatCode:
 		var err error
